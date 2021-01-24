@@ -1,0 +1,48 @@
+﻿@model List<Import_to_DB.ViewModel.EmployeeModel>
+
+@{
+    ViewBag.Title = "Index";
+    WebGrid grid = new WebGrid(Model, rowsPerPage: 20);
+}
+
+<h2>Upload And View CSV</h2>
+<hr />
+
+<div class="row">
+    @grid.GetHtml(
+
+        tableStyle: "table table-responsive table-striped table-bordered",
+        columns: grid.Columns(
+
+            grid.Column(header: "Payroll", format:@<text><div class="edit" data-id="@item.ID" data-propertyname="Payroll">@item.Payroll</div></text>),
+            
+            grid.Column(header: "FirstName", format:@<text><div class="edit" data-id="@item.ID" data-propertyname="Firstname">@item.Firstname</div></text>),
+            
+            grid.Column(header: "SurName", format:@<text><div class="edit" data-id="@item.ID" data-propertyname="Surname" >@item.Surname</div></text>),
+            
+            grid.Column(header:"Birthday", format:@<text><div class="edit" data-id="@item.ID" data-propertyname="Birthday" >@item.Birthday</div></text>),
+            
+            grid.Column(header:"Telephone", format:@<text><div class="edit" data-id="@item.ID" data-propertyname="Telephone" >@item.Telephone</div></text>),
+            
+            grid.Column(header:"Mobile", format:@<text><div class="edit" data-id="@item.ID" data-propertyname="Mobile" >@item.Mobile</div></text>),
+            
+            grid.Column(header:"Address", format:@<text><div class="edit" data-id="@item.ID" data-propertyname="Address" >@item.Address</div></text>),
+            
+            grid.Column(header: "Address_2", format:@<text><div class="edit" data-id="@item.ID" data-propertyname="Address_2">@item.Address_2</div></text>),
+            
+            grid.Column(header: "Postcode", format:@<text><div class="edit" data-id="@item.ID" data-propertyname="Postcode">@item.Postcode</div></text>),
+            
+            grid.Column(header:"Email", format:@<text><div class="edit" data-id="@item.ID" data-propertyname="Postcode" >@item.Postcode</div></text>),
+            
+            grid.Column(header:"Start Date", format:@<text><div class="edit" data-id="@item.ID" data-propertyname="StartDate" >@item.StartDate</div></text>)
+
+
+
+)
+
+)
+
+
+
+</div>
+
