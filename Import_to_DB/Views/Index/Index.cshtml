@@ -1,17 +1,17 @@
 ﻿@model List<Import_to_DB.ViewModel.EmployeeModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "~";
     WebGrid grid = new WebGrid(Model, rowsPerPage: 5);
 }
 
-<h2>Upload and read CSV file in ASP.Net MVC</h2>
+<h2>Upload CSV file</h2>
 
 <div class="container">
     <div class="tab-content">
         <div class="tab-pane active">
             <div class="row">
-                @using (Html.BeginForm("Index", "Import", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("Index","File Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
                     <div class="form-group">
 
