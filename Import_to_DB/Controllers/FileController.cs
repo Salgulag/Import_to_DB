@@ -1,4 +1,5 @@
-﻿using Import_to_DB.ViewModel;
+﻿using Import_to_DB.Models;
+using Import_to_DB.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,9 +11,9 @@ namespace Import_to_DB.Controllers
 {
     public class FileController : Controller
     {
-        // GET: File
+        // Post: File
         [HttpPost]
-        public ActionResult Index(HttpPostedFileBase postedFile)
+        public ActionResult Upload(HttpPostedFileBase postedFile)
         {
             if (postedFile != null)
             {
@@ -43,19 +44,40 @@ namespace Import_to_DB.Controllers
                                 Payroll = rows[0].ToString(),
                                 Firstname = rows[1].ToString(),
                                 Surname = rows[2].ToString(),
-                                Birthday = DateTime.Parse(rows[3].ToString()),
+                                Birthday = DateTime.ParseExact(rows[3].ToString(), "d/M/yyyy", null),
                                 Telephone = rows[4].ToString(),
                                 Mobile = rows[5].ToString(),
                                 Address = rows[6].ToString(),
                                 Address_2 = rows[7].ToString(),
                                 Postcode = rows[8].ToString(),
                                 Email = rows[9].ToString(),
-                                StartDate = DateTime.Parse(rows[10].ToString())
+                                StartDate = DateTime.ParseExact(rows[10].ToString(), "d/M/yyyy", null)
                             });
+                        }
+
+                        using (DatabaseEntities db = new DatabaseEntities())
+                        {
+                            var toInsert = employees.Where(p => !db.Employees.Any(x => x.Mobile == p.Mobile && x.Email == p.Email));
+                            db.Employees.AddRange(toInsert.Select(a => new Employee()
+                            {
+                                Payroll = a.Payroll,
+                                Firstname = a.Firstname,
+                                Surname = a.Surname,
+                                Birthday = a.Birthday,
+                                Telephone = a.Telephone,
+                                Mobile = a.Mobile,
+                                Address = a.Address,
+                                Address_2 = a.Address_2,
+                                Postcode = a.Postcode,
+                                Email = a.Email,
+                                Start_date = a.StartDate
+                            }));
+                            db.SaveChanges();
+                            ViewBag.InsertedCount = toInsert.Count();
                         }
                     }
 
-                    return View("View", employees);
+                   // return Json("Index", "Home", employees);
                 }
                 catch (Exception ex)
                 {
@@ -67,7 +89,7 @@ namespace Import_to_DB.Controllers
                 ViewBag.Message = "Please select the file first to upload.";
             }
 
-            return View();
+            return RedirectToAction("Index", "Home");
 
         }
     }
