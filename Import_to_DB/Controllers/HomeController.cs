@@ -43,6 +43,31 @@ namespace Import_to_DB.Controllers
                 return View(list);
         }
 
+        public ActionResult UpdateEmployee(Employee employee)
+        {
+            using (DatabaseEntities entities = new DatabaseEntities())
+            {
+                Employee updatedEmployee = (from c in entities.Employees
+                                            where c.Id == employee.Id
+                                            select c).FirstOrDefault();
+                updatedEmployee.Payroll = employee.Payroll;
+                updatedEmployee.Firstname = employee.Firstname;
+                updatedEmployee.Surname = employee.Surname;
+                updatedEmployee.Birthday = employee.Birthday;
+                updatedEmployee.Telephone = employee.Telephone;
+                updatedEmployee.Mobile = employee.Mobile;
+                updatedEmployee.Address = employee.Address;
+                updatedEmployee.Address_2 = employee.Address_2;
+                updatedEmployee.Postcode = employee.Postcode;
+                updatedEmployee.Email = employee.Email;
+                updatedEmployee.Start_date = employee.Start_date;
+
+                entities.SaveChanges();
+            }
+
+            return new EmptyResult();
+        }
+
     }
 
 }

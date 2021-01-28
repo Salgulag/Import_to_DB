@@ -1,14 +1,15 @@
-﻿@model List<Import_to_DB.ViewModel.EmployeeModel>
+﻿<@model List<Import_to_DB.ViewModel.EmployeeModel>
+
 
 @{
     ViewBag.Title = "~";
-    WebGrid grid = new WebGrid(Model, rowsPerPage: 5);
+    WebGrid grid = new WebGrid(Model, rowsPerPage: 10);
 }
 
-@if(ViewBag.InsertedCount != null && ViewBag.InsertedCount > 0)
+@if (ViewBag.InsertedCount != null && ViewBag.InsertedCount > 0)
 {
     <script>
-        alert(@ViewBag.InsertedCount);
+    alert(@ViewBag.InsertedCount);
     </script>
 }
 
@@ -18,97 +19,177 @@
     <div class="tab-content">
         <div class="tab-pane active">
             <div class="row">
-                @using (Html.BeginForm("Upload", "File", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
-                    <div class="form-group">
+@using (Html.BeginForm("Upload", "File", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-group">
 
-                        @Html.Label("File Upload", new { @class = "col-sm-3" })
+    @Html.Label("File Upload", new { @class = "col-sm-3" })
 
-                        <div class="col-sm-7">
-                            <input type="file" id="postedFile" name="postedFile" class="form-control" accept=".csv" />
-                        </div>
-                    </div>
+    <div class="col-sm-7">
+    <input type="file" id="postedFile" name="postedFile" class="form-control" accept=".csv" />
+    </div>
+    </div>
 
-                    <div class="form-group">
+    <div class="form-group">
 
-                        <div class="col-md-offset-3 col-md-10">
-                            <br />
-                            <input type="submit" title="Upload" value="Upload" class="btn btn-default" />
-                        </div>
-                    </div>
-                    <div class="form-group">
+    <div class="col-md-offset-3 col-md-10">
+    <br />
+    <input type="submit" title="Upload" value="Upload" class="btn btn-default" />
+    </div>
+    </div>
+    <div class="form-group">
 
-                        <div class="col-md-offset-3 col-md-10">
-                            <br />
-                            <span style="color:red;">
-                                @ViewBag.Message
-                            </span>
-                        </div>
-                    </div>
-                }
+    <div class="col-md-offset-3 col-md-10">
+    <br />
+    <span style="color:red;">
+    @ViewBag.Message
+    </span>
+    </div>
+    </div>
+}
             </div>
         </div>
     </div>
 </div>
 
 
-<h2>View CSV</h2>
+<h2>View DB data</h2>
 <hr />
 <style type="text/css">
-    .table {
-        margin: 4px;
-        border-collapse: collapse;
-        width: 300px;
-    }
+        body {
+            font-family: Arial;
+            font-size: 10pt;
+        }
 
-    .header {
-        background-color: gray;
-        font-weight: bold;
-        color: #fff;
-    }
+        .grid {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+        }
 
-    .table th, .table td {
-        border: 1px solid black;
-        padding: 5px;
-    }
-</style>
+        .grid th {
+            background-color: #F7F7F7;
+            font-weight: bold;
+        }
+
+        .grid th, .Grid td {
+            padding: 5px;
+            width: 150px;
+            border: 1px solid #ccc;
+        }
+
+        .grid, .grid table td {
+            border: 0px solid #ccc;
+        }
+
+        .grid th a, .grid th a:visited {
+            color: #333;
+        }
+    </style>
 
 
 @grid.GetHtml(
+   htmlAttributes: new { @id = "WebGrid", @class = "Grid" },
+   columns: grid.Columns(
+            grid.Column(header: "Payroll", format: @<span><span class="label">@item.Payroll</span>
+            <input class="text" type="text" value="@item.Payroll" style="display:none"/></span>, style: "Payroll"),
+grid.Column(header: "Firstname", format: @<span><span class="label">@item.Firstname</span>
+                    <input class="text" type="text" value="@item.Firstname" style="display:none"/></span>, style: "Firstname"),
+grid.Column(header: "Surname", format: @<span><span class="label">@item.Surname</span>
+                    <input class="text" type="text" value="@item.Surname" style="display:none"/></span>, style: "Surname"),
+grid.Column(header: "Birthday", format: @<span><span class="label">@item.Birthday</span>
+                    <input class="text" type="text" value="@item.Birthday" style="display:none"/></span>, style: "Birthday"),
+grid.Column(header: "Telephone", format: @<span><span class="label">@item.Telephone</span>
+                    <input class="text" type="text" value="@item.Telephone" style="display:none"/></span>, style: "Telephone"),
+grid.Column(header: "Mobile", format: @<span><span class="label">@item.Mobile</span>
+                    <input class="text" type="text" value="@item.Mobile" style="display:none"/></span>, style: "Mobile"),
+grid.Column(header: "Address", format: @<span><span class="label">@item.Address</span>
+                    <input class="text" type="text" value="@item.Address" style="display:none"/></span>, style: "Address"),
+grid.Column(header: "Address_2", format: @<span><span class="label">@item.Address_2</span>
+                    <input class="text" type="text" value="@item.Address_2" style="display:none"/></span>, style: "Address_2"),
+grid.Column(header: "Postcode", format: @<span><span class="label">@item.Postcode</span>
+                    <input class="text" type="text" value="@item.Postcode" style="display:none"/></span>, style: "Postcode"),
+grid.Column(header: "Email", format: @<span><span class="label">@item.Email</span>
+                    <input class="text" type="text" value="@item.Email" style="display:none"/></span>, style: "Email"),
+grid.Column(header: "StartDate", format: @<span><span class="label">@item.StartDate</span>
+                    <input class="text" type="text" value="@item.StartDate" style="display:none"/></span>, style: "StartDate"),
 
-tableStyle: "table", // applying style on grid
+grid.Column(format:@<span class="link">
+                <a class="Edit" href="javascript:;">Edit</a>
+                <a class="Update" href="javascript:;" style="display:none">Update</a>
+                <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>
+                </span>)))
 
-fillEmptyRows: false,
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
+    <script type="text/javascript">
 
-//show empty row when there is only one record on page to it will display all empty rows there.
-headerStyle: "header", //applying style.
+        //Edit event handler.
+        $("body").on("click", "#WebGrid TBODY .Edit", function () {
+            var row = $(this).closest("tr");
+            $("td", row).each(function () {
+                if ($(this).find(".text").length > 0) {
+                    $(this).find(".text").show();
+                    $(this).find(".label").hide();
+                }
+            });
+            row.find(".Update").show();
+            row.find(".Cancel").show();
+            $(this).hide();
+        });
 
-footerStyle: "grid-footer", //applying style.
+        //Update event handler.
+        $("body").on("click", "#WebGrid TBODY .Update", function () {
+            var row = $(this).closest("tr");
+            $("td", row).each(function () {
+                if ($(this).find(".text").length > 0) {
+                    var span = $(this).find(".label");
+                    var input = $(this).find(".text");
+                    span.html(input.val());
+                    span.show();
+                    input.hide();
+                }
+            });
+            row.find(".Edit").show();
+            row.find(".Cancel").hide();
+            $(this).hide();
 
-mode: WebGridPagerModes.All, //paging to grid
+            var employee = {};
+            employee.Payroll = row.find(".Payroll").find(".label").html();
+            employee.Firstname = row.find(".Firstname").find(".label").html();
+            employee.Surname = row.find(".Surname").find(".label").html();
+            employee.Birthday = row.find(".Birthday").find(".label").html();
+            employee.Telephone = row.find(".Telephone").find(".label").html();
+            employee.Mobile = row.find(".Mobile").find(".label").html();
+            employee.Address = row.find(".Address").find(".label").html();
+            employee.Address_2 = row.find(".Address_2").find(".label").html();
+            employee.Postcode = row.find(".Postcode").find(".label").html();
+            employee.Email = row.find(".Email").find(".label").html();
+            employee.StartDate = row.find(".StartDate").find(".label").html();
 
-firstText: "<< First",
+            $.ajax({
+                type: "POST",
+                url: "/Home/updatedEmployee",
+                data: '{employee:' + JSON.stringify(employee) + '}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            });
+        });
 
-previousText: "< Prev",
-
-nextText: "Next >",
-
-lastText: "Last >>",
-
-columns: new[]  // colums in grid
-{
-    grid.Column("Payroll"), //the model fields to display
-    grid.Column("Firstname"),
-    grid.Column("Surname"),
-    grid.Column("Birthday"),
-    grid.Column("Telephone"),
-    grid.Column("Mobile"),
-    grid.Column("Address"),
-    grid.Column("Address_2"),
-    grid.Column("Postcode"),
-    grid.Column("Email"),
-    grid.Column("StartDate"),
-
-
-})
-
+        //Cancel event handler.
+        $("body").on("click", "#WebGrid TBODY .Cancel", function () {
+            var row = $(this).closest("tr");
+            $("td", row).each(function () {
+                if ($(this).find(".text").length > 0) {
+                    var span = $(this).find(".label");
+                    var input = $(this).find(".text");
+                    input.val(span.html());
+                    span.show();
+                    input.hide();
+                }
+            });
+            row.find(".Edit").show();
+            row.find(".Update").hide();
+            $(this).hide();
+        });
+    
+    </script>

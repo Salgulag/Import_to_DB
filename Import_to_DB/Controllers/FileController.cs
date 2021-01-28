@@ -57,7 +57,7 @@ namespace Import_to_DB.Controllers
 
                         using (DatabaseEntities db = new DatabaseEntities())
                         {
-                            var toInsert = employees.Where(p => !db.Employees.Any(x => x.Mobile == p.Mobile && x.Email == p.Email));
+                            var toInsert = employees.Where(p => !db.Employees.Any(x => x.Payroll == p.Payroll));
                             db.Employees.AddRange(toInsert.Select(a => new Employee()
                             {
                                 Payroll = a.Payroll,
