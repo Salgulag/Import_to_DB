@@ -1,9 +1,11 @@
-﻿<@model List<Import_to_DB.ViewModel.EmployeeModel>
+﻿@model List<Import_to_DB.ViewModel.EmployeeModel>
 
 
 @{
     ViewBag.Title = "~";
     WebGrid grid = new WebGrid(Model, rowsPerPage: 10);
+//    WebGrid grid = new WebGrid(Model.OrderByDescending(s => s.Surname), rowsPerPage: 10);
+
 }
 
 @if (ViewBag.InsertedCount != null && ViewBag.InsertedCount > 0)
@@ -54,6 +56,15 @@
 
 
 <h2>View DB data</h2>
+
+<div class="search">
+    @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+    {
+        <input id="search" type="text" name="search" value="@ViewBag.Search" placeholder="Search..."/>
+        <button type="submit">Search</button>
+    }
+    </div>
+
 <hr />
 <style type="text/css">
         body {
@@ -89,29 +100,33 @@
 
 @grid.GetHtml(
    htmlAttributes: new { @id = "WebGrid", @class = "Grid" },
+//   tableStyle: "table table-responsive table-bordered",
    columns: grid.Columns(
-            grid.Column(header: "Payroll", format: @<span><span class="label">@item.Payroll</span>
-            <input class="text" type="text" value="@item.Payroll" style="display:none"/></span>, style: "Payroll"),
-grid.Column(header: "Firstname", format: @<span><span class="label">@item.Firstname</span>
+            
+grid.Column(header: "ID", format: @<span><span class="label">@item.ID</span>
+                    <input class="" value="@item.ID" style="display:none"/></span>, style: "ID"),
+grid.Column(columnName: "Payroll", header: "Payroll", format: @<span><span class="label">@item.Payroll</span>
+                    <input class="text" type="text" value="@item.Payroll" style="display:none"/></span>, style: "Payroll"),
+grid.Column(columnName: "Firstname", header: "Firstname", format: @<span><span class="label">@item.Firstname</span>
                     <input class="text" type="text" value="@item.Firstname" style="display:none"/></span>, style: "Firstname"),
-grid.Column(header: "Surname", format: @<span><span class="label">@item.Surname</span>
+grid.Column(columnName: "Surname", header: "Surname", format: @<span><span class="label">@item.Surname</span>
                     <input class="text" type="text" value="@item.Surname" style="display:none"/></span>, style: "Surname"),
-grid.Column(header: "Birthday", format: @<span><span class="label">@item.Birthday</span>
-                    <input class="text" type="text" value="@item.Birthday" style="display:none"/></span>, style: "Birthday"),
-grid.Column(header: "Telephone", format: @<span><span class="label">@item.Telephone</span>
+grid.Column(columnName: "Birthday", header: "Birthday", format: @<span><span class="label">@item.Birthday.ToShortDateString()</span>
+                    <input class="text" type="date" value="@item.Birthday.ToShortDateString()" style="display:none"/></span>, style: "Birthday"),
+grid.Column(columnName: "Telephone", header: "Telephone", format: @<span><span class="label">@item.Telephone</span>
                     <input class="text" type="text" value="@item.Telephone" style="display:none"/></span>, style: "Telephone"),
-grid.Column(header: "Mobile", format: @<span><span class="label">@item.Mobile</span>
+grid.Column(columnName: "Mobile", header: "Mobile", format: @<span><span class="label">@item.Mobile</span>
                     <input class="text" type="text" value="@item.Mobile" style="display:none"/></span>, style: "Mobile"),
-grid.Column(header: "Address", format: @<span><span class="label">@item.Address</span>
+grid.Column(columnName: "Address", header: "Address", format: @<span><span class="label">@item.Address</span>
                     <input class="text" type="text" value="@item.Address" style="display:none"/></span>, style: "Address"),
-grid.Column(header: "Address_2", format: @<span><span class="label">@item.Address_2</span>
+grid.Column(columnName: "Address_2", header: "Address_2", format: @<span><span class="label">@item.Address_2</span>
                     <input class="text" type="text" value="@item.Address_2" style="display:none"/></span>, style: "Address_2"),
-grid.Column(header: "Postcode", format: @<span><span class="label">@item.Postcode</span>
+grid.Column(columnName: "Postcode", header: "Postcode", format: @<span><span class="label">@item.Postcode</span>
                     <input class="text" type="text" value="@item.Postcode" style="display:none"/></span>, style: "Postcode"),
-grid.Column(header: "Email", format: @<span><span class="label">@item.Email</span>
+grid.Column(columnName: "Email", header: "Email", format: @<span><span class="label">@item.Email</span>
                     <input class="text" type="text" value="@item.Email" style="display:none"/></span>, style: "Email"),
-grid.Column(header: "StartDate", format: @<span><span class="label">@item.StartDate</span>
-                    <input class="text" type="text" value="@item.StartDate" style="display:none"/></span>, style: "StartDate"),
+grid.Column(columnName: "StartDate", header: "StartDate", format: @<span><span class="label">@item.StartDate.ToShortDateString()</span>
+                    <input class="text" type="date" value="@item.StartDate.ToShortDateString()" style="display:none"/></span>, style: "StartDate"),
 
 grid.Column(format:@<span class="link">
                 <a class="Edit" href="javascript:;">Edit</a>
@@ -122,6 +137,7 @@ grid.Column(format:@<span class="link">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script type="text/javascript" src="https://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
     <script type="text/javascript">
+
 
         //Edit event handler.
         $("body").on("click", "#WebGrid TBODY .Edit", function () {
@@ -154,6 +170,8 @@ grid.Column(format:@<span class="link">
             $(this).hide();
 
             var employee = {};
+
+            employee.ID = row.find(".ID").find(".label").html();
             employee.Payroll = row.find(".Payroll").find(".label").html();
             employee.Firstname = row.find(".Firstname").find(".label").html();
             employee.Surname = row.find(".Surname").find(".label").html();
@@ -164,11 +182,11 @@ grid.Column(format:@<span class="link">
             employee.Address_2 = row.find(".Address_2").find(".label").html();
             employee.Postcode = row.find(".Postcode").find(".label").html();
             employee.Email = row.find(".Email").find(".label").html();
-            employee.StartDate = row.find(".StartDate").find(".label").html();
+            employee.Start_Date = row.find(".StartDate").find(".label").html();
 
             $.ajax({
                 type: "POST",
-                url: "/Home/updatedEmployee",
+                url: "/Home/UpdateEmployee",
                 data: '{employee:' + JSON.stringify(employee) + '}',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json"

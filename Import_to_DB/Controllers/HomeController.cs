@@ -2,6 +2,7 @@
 using Import_to_DB.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -12,7 +13,8 @@ namespace Import_to_DB.Controllers
     public class HomeController : Controller
     {
         // GET: Index
-        public ActionResult Index()
+        [Obsolete]
+        public ActionResult Index(string search = "")
         {
             List<EmployeeModel> list = new List<EmployeeModel>();
 
@@ -20,9 +22,9 @@ namespace Import_to_DB.Controllers
             {
 
                 var v = (from a in dc.Employees
-                         select new EmployeeModel
+                         select new EmployeeModel 
                          {
-                             ID = a.Id,
+                             Id = a.Id,
                              Payroll = a.Payroll,
                              Firstname = a.Firstname,
                              Surname = a.Surname,
@@ -34,9 +36,13 @@ namespace Import_to_DB.Controllers
                              Postcode = a.Postcode,
                              Email = a.Email,
                              StartDate = a.Start_date
-
                          });
-                list = v.ToList();
+                if (!string.IsNullOrWhiteSpace(search))
+                {
+                    v = v.Where(p => p.Firstname.Contains(search) || p.Surname.Contains(search));
+                    ViewBag.Search = search;
+                }
+                list = v.OrderBy(p => p.Surname).ToList();
 
             }
 
@@ -50,17 +56,18 @@ namespace Import_to_DB.Controllers
                 Employee updatedEmployee = (from c in entities.Employees
                                             where c.Id == employee.Id
                                             select c).FirstOrDefault();
+
                 updatedEmployee.Payroll = employee.Payroll;
                 updatedEmployee.Firstname = employee.Firstname;
                 updatedEmployee.Surname = employee.Surname;
-                updatedEmployee.Birthday = employee.Birthday;
+                updatedEmployee.Birthday = employee.Birthday.Date;
                 updatedEmployee.Telephone = employee.Telephone;
                 updatedEmployee.Mobile = employee.Mobile;
                 updatedEmployee.Address = employee.Address;
                 updatedEmployee.Address_2 = employee.Address_2;
                 updatedEmployee.Postcode = employee.Postcode;
                 updatedEmployee.Email = employee.Email;
-                updatedEmployee.Start_date = employee.Start_date;
+                updatedEmployee.Start_date = employee.Start_date.Date;
 
                 entities.SaveChanges();
             }

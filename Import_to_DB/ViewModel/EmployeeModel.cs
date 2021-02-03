@@ -7,7 +7,7 @@ namespace Import_to_DB.ViewModel
 {
     public class EmployeeModel
     {
-            public int ID { get; internal set; }
+            public int Id { get; internal set; }
 
             public string Payroll { get; set; }
 
@@ -15,7 +15,7 @@ namespace Import_to_DB.ViewModel
 
             public string Surname { get; set; }
 
-            public System.DateTime Birthday { get; set; }
+            public DateTime Birthday { get; set; }
 
             public string Telephone { get; set; }
 
@@ -30,6 +30,7 @@ namespace Import_to_DB.ViewModel
             public string Email { get; set; }
 
             public DateTime StartDate { get; set; }
+
 
     }
 }

@@ -73,11 +73,11 @@ namespace Import_to_DB.Controllers
                                 Start_date = a.StartDate
                             }));
                             db.SaveChanges();
-                            ViewBag.InsertedCount = toInsert.Count();
+                            ViewBag.Message = $"Successfully inserted {toInsert.Count()} entries";
                         }
                     }
 
-                   // return Json("Index", "Home", employees);
+                    // return Json("Index", "Home", employees);
                 }
                 catch (Exception ex)
                 {
@@ -89,7 +89,7 @@ namespace Import_to_DB.Controllers
                 ViewBag.Message = "Please select the file first to upload.";
             }
 
-            return RedirectToAction("Index", "Home");
+            return View();
 
         }
     }
