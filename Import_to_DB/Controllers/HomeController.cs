@@ -37,6 +37,7 @@ namespace Import_to_DB.Controllers
                              Email = a.Email,
                              StartDate = a.Start_date
                          });
+
                 if (!string.IsNullOrWhiteSpace(search))
                 {
                     v = v.Where(p => p.Firstname.Contains(search) || p.Surname.Contains(search));

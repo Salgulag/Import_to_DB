@@ -111,8 +111,8 @@ grid.Column(columnName: "Firstname", header: "Firstname", format: @<span><span c
                     <input class="text" type="text" value="@item.Firstname" style="display:none"/></span>, style: "Firstname"),
 grid.Column(columnName: "Surname", header: "Surname", format: @<span><span class="label">@item.Surname</span>
                     <input class="text" type="text" value="@item.Surname" style="display:none"/></span>, style: "Surname"),
-grid.Column(columnName: "Birthday", header: "Birthday", format: @<span><span class="label">@item.Birthday.ToShortDateString()</span>
-                    <input class="text" type="date" value="@item.Birthday.ToShortDateString()" style="display:none"/></span>, style: "Birthday"),
+grid.Column(columnName: "Birthday", header: "Birthday", format: @<span><span class="label">@item.Birthday.ToString("yyyy-MM-dd")</span>
+                    <input class="text" type="date" value="@item.Birthday.ToString("yyyy-MM-dd")" style="display:none"/></span>, style: "Birthday"),
 grid.Column(columnName: "Telephone", header: "Telephone", format: @<span><span class="label">@item.Telephone</span>
                     <input class="text" type="text" value="@item.Telephone" style="display:none"/></span>, style: "Telephone"),
 grid.Column(columnName: "Mobile", header: "Mobile", format: @<span><span class="label">@item.Mobile</span>
@@ -125,8 +125,8 @@ grid.Column(columnName: "Postcode", header: "Postcode", format: @<span><span cla
                     <input class="text" type="text" value="@item.Postcode" style="display:none"/></span>, style: "Postcode"),
 grid.Column(columnName: "Email", header: "Email", format: @<span><span class="label">@item.Email</span>
                     <input class="text" type="text" value="@item.Email" style="display:none"/></span>, style: "Email"),
-grid.Column(columnName: "StartDate", header: "StartDate", format: @<span><span class="label">@item.StartDate.ToShortDateString()</span>
-                    <input class="text" type="date" value="@item.StartDate.ToShortDateString()" style="display:none"/></span>, style: "StartDate"),
+grid.Column(columnName: "StartDate", header: "StartDate", format: @<span><span class="label">@item.StartDate.ToString("yyyy-MM-dd")</span>
+                    <input class="text" type="date" value="@item.StartDate.ToString("yyyy-MM-dd")" style="display:none"/></span>, style: "StartDate"),
 
 grid.Column(format:@<span class="link">
                 <a class="Edit" href="javascript:;">Edit</a>
