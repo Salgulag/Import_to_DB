@@ -15,6 +15,8 @@
     </script>
 }
 
+
+<!--File uploading funcionality-->
 <h2>Upload CSV file</h2>
 
 <div class="container">
@@ -57,6 +59,7 @@
 
 <h2>View DB data</h2>
 
+<!--Search Button-->
 <div class="search">
     @using (Html.BeginForm("Index", "Home", FormMethod.Get))
     {
@@ -66,6 +69,7 @@
     </div>
 
 <hr />
+
 <style type="text/css">
         body {
             font-family: Arial;
@@ -97,7 +101,7 @@
         }
     </style>
 
-
+<!--DataGrid creation-->
 @grid.GetHtml(
    htmlAttributes: new { @id = "WebGrid", @class = "Grid" },
 //   tableStyle: "table table-responsive table-bordered",
@@ -139,7 +143,7 @@ grid.Column(format:@<span class="link">
     <script type="text/javascript">
 
 
-        //Edit event handler.
+        //Edit functionality
         $("body").on("click", "#WebGrid TBODY .Edit", function () {
             var row = $(this).closest("tr");
             $("td", row).each(function () {
@@ -153,7 +157,7 @@ grid.Column(format:@<span class="link">
             $(this).hide();
         });
 
-        //Update event handler.
+        //Update functionality
         $("body").on("click", "#WebGrid TBODY .Update", function () {
             var row = $(this).closest("tr");
             $("td", row).each(function () {
@@ -193,7 +197,7 @@ grid.Column(format:@<span class="link">
             });
         });
 
-        //Cancel event handler.
+        //Cancel functionality
         $("body").on("click", "#WebGrid TBODY .Cancel", function () {
             var row = $(this).closest("tr");
             $("td", row).each(function () {

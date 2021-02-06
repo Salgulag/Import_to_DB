@@ -40,7 +40,10 @@ namespace Import_to_DB.Controllers
 
                 if (!string.IsNullOrWhiteSpace(search))
                 {
-                    v = v.Where(p => p.Firstname.Contains(search) || p.Surname.Contains(search));
+                    v = v.Where(p => p.Firstname.Contains(search) || p.Surname.Contains(search) || p.Payroll.Contains(search)
+                    || p.Telephone.Contains(search) || p.Mobile.Contains(search) || p.Address.Contains(search) || p.Address_2.Contains(search)
+                    || p.Postcode.Contains(search) || p.Email.Contains(search));
+
                     ViewBag.Search = search;
                 }
                 list = v.OrderBy(p => p.Surname).ToList();

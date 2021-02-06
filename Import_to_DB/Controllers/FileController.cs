@@ -28,13 +28,13 @@ namespace Import_to_DB.Controllers
                         return View();
                     }
 
-
+                    //Pasing file
                     var employees = new List<EmployeeModel>();
                     using (var sreader = new StreamReader(postedFile.InputStream))
                     {
-                        //First line is header. If header is not passed in csv then we can neglect the below line.
+                        
                         string[] headers = sreader.ReadLine().Split(',');
-                        //Loop through the records
+                       
                         while (!sreader.EndOfStream)
                         {
                             string[] rows = sreader.ReadLine().Split(',');
@@ -55,6 +55,7 @@ namespace Import_to_DB.Controllers
                             });
                         }
 
+                        //Insert data to DB
                         using (DatabaseEntities db = new DatabaseEntities())
                         {
                             var toInsert = employees.Where(p => !db.Employees.Any(x => x.Payroll == p.Payroll));
